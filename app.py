@@ -25,9 +25,7 @@ app.config.from_object(__name__)
 
 app.config['UPLOAD_FOLDER'] = 'uploads/'
 app.config['ALLOWED_EXTENSIONS'] = {'docx', 'pdf'}
-
-# trainXFile, trainYFile, trainingDF = machine_learning.getTrainingDataFromCSV("training-data/training_data_for_resumes.csv")
-
+util.removeAllFilesFrom(app.config['UPLOAD_FOLDER'])
 
 @app.route('/')
 def home():
