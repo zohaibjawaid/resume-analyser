@@ -30,7 +30,10 @@ Navigate to http://localhost:5000
 If you get permission error in windows machine, run cmd as Administrator.
 
 ## Running notebook for algorithm (optional)
-Install Anaconda from https://www.anaconda.com/distribution/ and launch jupyter. Open `main.ipynb` in jupyter to run.
+Install Anaconda from https://www.anaconda.com/distribution/ and launch jupyter.
+* Extract `training-data.zip`
+* Place test resumes in `test-resumes` folder
+* Open `main.ipynb` in jupyter and run.
 
 ## Author
 
