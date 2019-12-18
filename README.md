@@ -1,12 +1,14 @@
-# Automated Resume Screening System (With Dataset)
+# Resume Scanner
 A web app to help employers to classify resumes.
 
 ## Description
 A semantic analysis and classification of resumes based on roles and experience needs of an organization. We will be applying NLP techniques to read different formats, and Machine Learning Algorithms to classify the concerned resumes accordingly.
 
+For bulk upload, it distributes resumes in `result/resumes/` folders as per class.
+
 ## Prerequisites
 
-# Software
+### Software
 * Flask==1.1.1
 * sklearn==0.0
 * PyPDF2==1.26.0
@@ -17,10 +19,18 @@ A semantic analysis and classification of resumes based on roles and experience 
 ## Running localhost
 
 * Run `pip install -r requirements.txt` to install dependencies
+* Extract `training-data.zip`
 
 ```
 python app.py
 ```
+
+Navigate to http://localhost:5000
+
+If you get permission error in windows machine, run cmd as Administrator.
+
+## Running notebook for algorithm (optional)
+Install Anaconda from https://www.anaconda.com/distribution/ and launch jupyter. Open `main.ipynb` in jupyter to run.
 
 ## Author
 

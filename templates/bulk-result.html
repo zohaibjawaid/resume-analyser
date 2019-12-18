@@ -60,16 +60,14 @@
                       <thead>
                         <tr>
                           <th scope="col" class="font-weight-bold">Resume</th>
-                          <th scope="col" class="font-weight-bold">Classification</th>
-                          <th scope="col" class="font-weight-bold">Skills</th>
+                          <th scope="col" class="font-weight-bold">Class</th>
                         </tr>
                       </thead>
                       <tbody>
                       {% for resume in resumesData: %}
                         <tr>
                           <td>{{ resume.filename }}</td>
-                          <td>{{ resume.classification }}</td>
-                          <td>{{ resume.skills }}</td>
+                          <td>{{ resume.class }}</td>
                         </tr>
 
                         {% endfor %}

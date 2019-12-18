@@ -11,9 +11,13 @@
 
 from flask import (Flask,render_template, request)
 
+import machine_learning
 import util
 import zipfile
 import os
+from sklearn.feature_extraction.text import CountVectorizer
+
+from info_extractor import InfoExtractor
 
 app = Flask(__name__)
 
@@ -21,6 +25,9 @@ app.config.from_object(__name__)
 
 app.config['UPLOAD_FOLDER'] = 'uploads/'
 app.config['ALLOWED_EXTENSIONS'] = {'docx', 'pdf'}
+
+# trainXFile, trainYFile, trainingDF = machine_learning.getTrainingDataFromCSV("training-data/training_data_for_resumes.csv")
+
 
 @app.route('/')
 def home():
@@ -31,23 +38,32 @@ def home():
 def upload():
     if request.method == 'POST':
         f = request.files['file']
-        folder = app.config['UPLOAD_FOLDER'] + 'single'
+        folder = app.config['UPLOAD_FOLDER']
         f.save(os.path.join(folder, f.filename))
-        characteristics = util.getCharacteristics(folder + '/' + f.filename)
+        # characteristics = util.getCharacteristics(folder + '/' + f.filename)
+
+        _, classification = machine_learning.testAndClassifyResumes()
+        skills = InfoExtractor.extractSkills(folder + f.filename)
         util.removeAllFilesFrom(folder)
-        return render_template("single-result.html", result = characteristics)
+        return render_template("single-result.html", result = {"filename": f.filename, "classification": classification[0], "skills": skills})
 
 @app.route('/bulk-upload', methods = ['POST'])
 def bulkUpload():
     if request.method == 'POST':
         f = request.files['file']
-
+        folder = app.config['UPLOAD_FOLDER']
         with zipfile.ZipFile(f, 'r') as zip_ref:
-            zip_ref.extractall(app.config['UPLOAD_FOLDER'] + 'bulk')
+            zip_ref.extractall(app.config['UPLOAD_FOLDER'])
 
-        characteristics = util.getCharacteristics('asdf')
+        filenames, classes = machine_learning.testAndClassifyResumes()
 
-        return render_template("bulk-result.html", resumesData = [characteristics])
+        result = []
+
+        for i in range(len(filenames)):
+            result.append({"filename": filenames[i], "class": classes[i]})
+
+        util.removeAllFilesFrom(folder)
+        return render_template("bulk-result.html", resumesData = result)
 
 
 if __name__ == '__main__':
